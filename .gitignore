@@ -6,3 +6,4 @@ build/
 *.log
 *.swp
 .idea/
+platforms/android/.gradle/2.2.1/taskArtifacts/
