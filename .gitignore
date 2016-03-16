@@ -2,7 +2,6 @@
 # http://git-scm.com/docs/gitignore
 
 platforms/android/build/
-platforms/ios/
 *.DS_Store
 *.log
 *.swp
