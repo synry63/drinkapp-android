@@ -738,14 +738,14 @@ angular.module('starter.controllers',[])
       myPopup.then(function(res) {
         if(res!=undefined){
           // MOI PROMO CORONA
-            $timeout(function(){
+           /* $timeout(function(){
               var popInfoPromo = $ionicPopup.alert({
                 title: '',
                 okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
                 templateUrl: 'templates/pedido-confirm-popup.html'
               });
 
-            },500);
+            },500);*/
 
           Order.addProductToOrder($scope.p,res);
           var $app_scope = Order.getMasterScope();
