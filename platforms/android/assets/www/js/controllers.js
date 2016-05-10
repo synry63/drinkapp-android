@@ -128,6 +128,7 @@ angular.module('starter.controllers',[])
 
     Order.initMasterScope($scope);
     $scope.order_count = Order.getCurrentOrderCount();
+    $scope.free_delivery = Order.is_free_delivery();
     $scope.total_order_amount = Order.getOrderAmount();
   // Form data for the login modal
   $scope.loginData = {};
@@ -441,6 +442,7 @@ angular.module('starter.controllers',[])
         if(resultCode==200){
           var $app_scope = Order.getMasterScope();
           $app_scope.order_count = Order.getCurrentOrderCount();
+          $app_scope.free_delivery = Order.is_free_delivery();
           $app_scope.total_order_amount = Order.getOrderAmount();
           $state.go('app.order');
 
@@ -760,6 +762,7 @@ angular.module('starter.controllers',[])
           Order.addProductToOrder($scope.p,res);
           var $app_scope = Order.getMasterScope();
           $app_scope.order_count = Order.getCurrentOrderCount();
+          $app_scope.free_delivery = Order.is_free_delivery();
           $app_scope.total_order_amount = Order.getOrderAmount();
           //console.log('Tapped!', res);
         }
@@ -997,7 +1000,6 @@ angular.module('starter.controllers',[])
     });
     $scope.remove_quantity = function(p){
       Order.updateQuantityOrderProduct(p,1,'less');
-      $scope.free_delivery = Order.is_free_delivery();
       var new_amount = Order.getOrderAmount();
       $scope.is_go_checkout_ok = Order.is_min_amount_ok();
       $scope.total_order_amount =  new_amount;
@@ -1005,7 +1007,6 @@ angular.module('starter.controllers',[])
     }
     $scope.add_quantity = function(p){
       Order.updateQuantityOrderProduct(p,1,'more');
-      $scope.free_delivery = Order.is_free_delivery();
       var new_amount = Order.getOrderAmount();
       $scope.is_go_checkout_ok = Order.is_min_amount_ok();
       $scope.total_order_amount =  new_amount;
