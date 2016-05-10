@@ -75,6 +75,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
   .factory('User', function($http) {
     var cachedUser = undefined;
     var is_over_18 = undefined;
+    var promo_view = false;
     function callUserData(loginData,callback) {
       $http({
         method: 'POST',
@@ -122,6 +123,17 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
 
         return saw;
       },
+      is_promo_view:function(){
+        return promo_view;
+      },
+      update_popup_promo_corona:function(new_state){
+        promo_view = new_state;
+        window.localStorage['promo_view'] = angular.toJson(promo_view);
+      },
+      /*reset_popup_promo_corona : function(){
+        var is_promo_view = false;
+        window.localStorage['promo_view'] = angular.toJson(is_promo_view);
+      },*/
       update_time_previos_time : function(){
         var previos = Math.floor(Date.now() / 1000);
         previos+=86400; // more 24 hours
@@ -370,6 +382,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
     var master_scope;
     var min_amount_ko = true;
     var min_amount = 50;
+    var free_delivery = false;
     return {
       initMasterScope:function(scope){
         master_scope = scope;
@@ -383,6 +396,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       is_min_amount_ok:function(){
         return min_amount_ko;
       },
+
       getLastOrderItems:function(id_order,callback){
         $http({
           method: 'POST',
@@ -455,12 +469,25 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       getCurrentOrderCount:function(){
         return order.pList.length;
       },
+      is_free_delivery:function(){
+        for (var i=0;i<order.pList.length;i++){
+          if(order.pList[i].p.free_delivery==true){
+            free_delivery = true;
+            return true;
+
+          }
+        }
+        free_delivery = false;
+        return false;
+
+      },
       getOrderAmount:function(){
         var amount = 0;
         for (var i=0;i<order.pList.length;i++){
           var price_init = order.pList[i].p.price;
           var quantity = order.pList[i].q;
           amount+= price_init*quantity;
+
         }
         var total = Math.round(amount * 100) / 100;
         if(total>=min_amount){
@@ -469,7 +496,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         else{
           min_amount_ko = true;
         }
-        if(total>0){
+        if(total>0 && free_delivery==false){
           total+=3.50 // more delivery
         }
         return total.toFixed(2);
@@ -488,7 +515,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         }
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/addPedido_v3',
+          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/addPedido_v4',
           data:data,
           withCredentials: false,
           headers: {
