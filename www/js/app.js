@@ -24,7 +24,9 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
 
   });
 })
-
+/**
+ * categories API calls
+ */
   .factory('Playlist', function($http) {
     var cachedData;
     function getData(callback) {
@@ -34,34 +36,11 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         callback(data);
       });
     }
-    /*var arr_playlist = [
-      { title: 'whisky', id: 1,categoryurlpic:"img/categoria.png" },
-      { title: 'pisco', id: 2 ,categoryurlpic:"img/pisco.png"},
-      { title: 'vodka', id: 3 ,categoryurlpic:"img/vodka.png"},
-      { title: 'gin', id: 4 ,categoryurlpic:"img/gin.png"},
-      { title: 'rum', id: 5 ,categoryurlpic:"img/pancakes2.png"},
-      { title: 'energizantes', id: 6 ,categoryurlpic:"img/energizante.png"},
-      { title: 'otros', id: 7 ,categoryurlpic:"img/otros.png"}
-    ];*/
+
 
     return {
-      /*getCurrentPlaylist: function($id){
 
-        for (var i = 0; i < arr_playlist.length; i++) {
-          if(arr_playlist[i].id==$id){
-            return arr_playlist[i];
-          }
-
-        }
-      },*/
-      getPlaylists:getData,/*function(callback){
-        $http.get('http://vrac.ryma-soluciones.com/drinkapp_app_backend/getCategorias').success(function(data) {
-          console.log(data);
-          cachedData = data.results;
-          callback(data.results);
-        });
-        return arr_playlist;
-      }*/
+      getPlaylists:getData,
       getProductsCategorie: function($id){
         for (var i = 0; i < cachedData.length; i++) {
           if(cachedData[i].id==$id){
@@ -72,6 +51,9 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       }
     }
   })
+/**
+ * user API calls
+ */
   .factory('User', function($http) {
     var cachedUser = undefined;
     var is_over_18 = undefined;
@@ -84,10 +66,8 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         withCredentials: false,
         headers: {
           'Content-Type': 'application/json'
-          //'X-Custom-Header': 'value'
         }
-        //data: 'key1='+$scope.loginData.username+'&key2=value2',
-        //headers: { 'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'},
+
 
       }).then(function(resp) {
         // For JSON responses, resp.data contains the result
@@ -113,8 +93,6 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
             // so check time
             var timestamp_now = Math.floor(Date.now() / 1000);
             var timestamp_saved =parseInt(previos);
-            //console.log(timestamp_saved);
-            //console.log(timestamp_now);
             if(timestamp_saved<timestamp_now){
               //alert('here');
               saw = false;
@@ -130,10 +108,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         promo_view = new_state;
         window.localStorage['promo_view'] = angular.toJson(promo_view);
       },
-      /*reset_popup_promo_corona : function(){
-        var is_promo_view = false;
-        window.localStorage['promo_view'] = angular.toJson(is_promo_view);
-      },*/
+
       update_time_previos_time : function(){
         var previos = Math.floor(Date.now() / 1000);
         previos+=86400; // more 24 hours
@@ -172,10 +147,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
-          //data: 'key1='+$scope.loginData.username+'&key2=value2',
-          //headers: { 'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'},
 
         }).then(function(resp) {
           // For JSON responses, resp.data contains the result
@@ -199,10 +171,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
-          //data: 'key1='+$scope.loginData.username+'&key2=value2',
-          //headers: { 'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'},
 
         }).then(function(resp) {
           // For JSON responses, resp.data contains the result
@@ -211,9 +180,6 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           //callback(resp.status,resp.data);
 
         }, function(err) {
-          // err.status will contain the status code
-          //callback(err.status,err.data.msg);
-          //$scope.error = err.data.msg;
 
         })
       },
@@ -225,10 +191,8 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
+
           }
-          //data: 'key1='+$scope.loginData.username+'&key2=value2',
-          //headers: { 'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'},
 
         }).then(function(resp) {
           // For JSON responses, resp.data contains the result
@@ -249,10 +213,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
-          //data: 'key1='+$scope.loginData.username+'&key2=value2',
-          //headers: { 'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'},
 
         }).then(function(resp) {
           // For JSON responses, resp.data contains the result
@@ -305,7 +266,6 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
 
         }).then(function(resp) {
@@ -335,7 +295,6 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
 
         }).then(function(resp) {
@@ -359,7 +318,6 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
 
         }).then(function(resp) {
@@ -376,6 +334,9 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       }
     }
   })
+/**
+ * order API calls
+ */
   .factory('Order', function($http) {
     var order = {};
     order.pList = [];
@@ -405,10 +366,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           withCredentials: false,
           headers: {
             'Content-Type': 'application/json'
-            //'X-Custom-Header': 'value'
           }
-          //data: 'key1='+$scope.loginData.username+'&key2=value2',
-          //headers: { 'Content-Type': 'application/json','Access-Control-Allow-Headers':'*'},
 
         }).then(function(resp) {
           // For JSON responses, resp.data contains the result
