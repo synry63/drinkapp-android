@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
     var cachedData;
     function getData(callback) {
 
-      $http.get('http://vrac.ryma-soluciones.com/drinkapp_app_backend/getCategorias').success(function(data) {
+      $http.get('http://superapi.drinkapp.pe/drinkapp_src/getCategorias').success(function(data) {
         cachedData = data;
         callback(data);
       });
@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
     function callUserData(loginData,callback) {
       $http({
         method: 'POST',
-        url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/login',
+        url: 'http://superapi.drinkapp.pe/drinkapp_src/login',
         data:loginData,
         withCredentials: false,
         headers: {
@@ -142,7 +142,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       loginFacebook:function(userFacebook,callback){
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/loginFacebook',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/loginFacebook',
           data:userFacebook,
           withCredentials: false,
           headers: {
@@ -166,7 +166,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         this.getCurrentUser();
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/rate_us',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/rate_us',
           data:{'id':cachedUser.id},
           withCredentials: false,
           headers: {
@@ -186,7 +186,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       getUserPuntos:function(callback){
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/getUserPuntos',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/getUserPuntos',
           data:{'id':cachedUser.id},
           withCredentials: false,
           headers: {
@@ -208,7 +208,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       getLastUserOrder:function(callback){
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/getUserLastOrder',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/getUserLastOrder',
           data:{'id':cachedUser.id},
           withCredentials: false,
           headers: {
@@ -238,7 +238,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       updateUser:function(user,callback){
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/updateUser',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/updateUser_v2',
           data:user,
           withCredentials: false,
           headers: {
@@ -261,7 +261,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       deleteDireccion:function(dir,callback){
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/deleteDireccion',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/deleteDireccion',
           data:dir,
           withCredentials: false,
           headers: {
@@ -290,7 +290,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         dir.id_user = cachedUser.id;
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/editDireccion_v2',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/editDireccion_v2',
           data:dir,
           withCredentials: false,
           headers: {
@@ -313,7 +313,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         dir.id_user = cachedUser.id;
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/addDireccion_v2',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/addDireccion_v2',
           data:dir,
           withCredentials: false,
           headers: {
@@ -361,7 +361,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       getLastOrderItems:function(id_order,callback){
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/getOrderItems',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/getOrderItems',
           data:{'id':id_order},
           withCredentials: false,
           headers: {
@@ -473,7 +473,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         }
         $http({
           method: 'POST',
-          url: 'http://vrac.ryma-soluciones.com/drinkapp_app_backend/addPedido_v4',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/addPedido_v5',
           data:data,
           withCredentials: false,
           headers: {

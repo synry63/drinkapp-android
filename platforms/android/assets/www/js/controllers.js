@@ -13,6 +13,7 @@ angular.module('starter.controllers',[])
 
       getFacebookProfileInfo(authResponse)
         .then(function(user) {
+          console.log(user);
           User.loginFacebook(user,function(resultCode,result){
             if(resultCode==200 || resultCode==201){
               delete $scope.error_server;
@@ -159,7 +160,7 @@ angular.module('starter.controllers',[])
           value:""
         };
         new_arr_dir.push(last_item);
-        $scope.email_read_only = true;
+        //$scope.email_read_only = true;
         $scope.user = user;
         $scope.direcciones = new_arr_dir;
         delete $scope.dir;
@@ -167,13 +168,13 @@ angular.module('starter.controllers',[])
       }
       else if(user==undefined && $scope.user){ // so no user registered but a user has write data allready
         $scope.user.id = 0;
-        $scope.email_read_only = false;
+        //$scope.email_read_only = false;
         $scope.password_state = { checked: true };
         $scope.dir = {id:0};
 
       }
       else{
-        $scope.email_read_only = false;
+        //$scope.email_read_only = false;
         $scope.password_state = { checked: true };
         $scope.user = {id:0};
         $scope.dir = {id:0};
@@ -239,6 +240,7 @@ angular.module('starter.controllers',[])
 
             getFacebookProfileInfo(success.authResponse)
               .then(function(user) {
+                console.log(user);
                 User.loginFacebook(user,function(resultCode,result){
                   if(resultCode==200 || resultCode==201){
                     delete $scope.error_server;
