@@ -273,6 +273,12 @@ angular.module('starter.controllers',[])
     };
     $scope.edit_dir = {
     };
+    Order.getDistritosRepartos(function(resultCode,r){
+      if(resultCode==200){
+        $scope.distritos = r;
+      }
+    });
+
     $scope.$on('$ionicView.enter', function(e) {
       var user = User.getCurrentUser();
       User.getLastUserOrder(function(status,r){
@@ -341,7 +347,14 @@ angular.module('starter.controllers',[])
       $scope.oModal2.show();
     },
     $scope.editDirModal = function(a_dir){
-      //console.log(a_dir);
+      for (i = 0; i < $scope.distritos.length; i++) {
+        var test_dir = $scope.distritos[i];
+        if(test_dir.name==a_dir.distrito){
+          a_dir.distrito = test_dir;
+          break;
+        }
+      }
+        //console.log(a_dir);
       $scope.edit_dir = a_dir;
 //      console.log($scope.user);
 //      console.log(a_dir);
@@ -672,6 +685,13 @@ angular.module('starter.controllers',[])
         recuerdaPopup.close();
       };
     }
+    Order.getDistritosRepartos(function(resultCode,r){
+      if(resultCode==200){
+        $scope.distritos = r;
+      }
+
+    });
+
 
     $scope.order = Order.getCurrentOrder();
     $scope.total_to_pay = Order.getOrderAmount();
@@ -680,11 +700,17 @@ angular.module('starter.controllers',[])
     delete  $scope.error_server;
 
     $scope.updateDir = function(selected){
-
       if(selected==undefined){
         $scope.dir = angular.copy($scope.reset_obj);
       }
       else{
+        for (i = 0; i < $scope.distritos.length; i++) {
+          var test_dir = $scope.distritos[i];
+          if(test_dir.name==selected.distrito){
+            selected.distrito = test_dir;
+            break;
+          }
+        }
         $scope.dir = selected;
       }
     }
