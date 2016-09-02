@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
     var cachedData;
     function getData(callback) {
 
-      $http.get('http://superapi.drinkapp.pe/drinkapp_src/getCategorias').success(function(data) {
+      $http.get('http://superapi.drinkapp.pe/drinkapp_src/getCategorias_v2').success(function(data) {
         cachedData = data;
         callback(data);
       });
@@ -590,13 +590,23 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
           }
         }
       })
-    .state('app.single', {
-      url: '/playlists/:playlistId',
+      .state('app.single', {
+        url: '/playlists/:playlistId',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/playlist.html',
+            controller: 'PlaylistCtrl'
+          }
+        }
+      })
+    .state('app.puntos', {
+      url: '/playlists/puntos/:playlistId',
         cache: true,
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlist.html',
-          controller: 'PlaylistCtrl'
+          templateUrl: 'templates/puntos.html',
+          controller: 'PuntosCtrl'
         }
       }
     });

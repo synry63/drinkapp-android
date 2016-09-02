@@ -843,6 +843,24 @@ angular.module('starter.controllers',[])
         $app_scope.hide_footer = true;
     });
   })
+.controller('PuntosCtrl', function($scope,$rootScope, $stateParams,Playlist,Order) {
+  Array.prototype.chunk = function(chunkSize) {
+    var array=this;
+    return [].concat.apply([],
+      array.map(function(elem,i) {
+        return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+      })
+    );
+  }
+
+  var category_with_products = Playlist.getProductsCategorie($stateParams.playlistId);
+  var rows = category_with_products.bebidas.chunk(2);
+  var out = {};
+  out.title= category_with_products.nombre;
+  out.rows = rows;
+  $scope.categoryWithProducts = out;
+
+})
 .controller('PlaylistCtrl', function($scope,$rootScope, $stateParams,Playlist,Order) {
     Array.prototype.chunk = function(chunkSize) {
       var array=this;

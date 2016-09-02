@@ -16,7 +16,8 @@
             <img style="max-height: 100px;top:0px" ng-src="{{item.p.img_u_r_l}}">
             <p class="order-item-quantity"><span class="quantity-text">Cantidad : </span><span class="quantity">{{item.q}}</span></p>
             <h2>{{item.p.nombre}}</h2>
-            <p>S/. {{item.p.price}}</p>
+            <p ng-if="item.p.por_punto">{{item.p.precio_puntos}} puntos requeridos</p>
+            <p ng-if="!item.p.por_punto">S/. {{item.p.price}}</p>
             <p class="quantity-change">
               <span class="ion-arrow-swap"></span><span>slide cambiar cantidad.</span>
             </p>
