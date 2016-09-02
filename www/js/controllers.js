@@ -695,6 +695,7 @@ angular.module('starter.controllers',[])
 
     $scope.order = Order.getCurrentOrder();
     $scope.total_to_pay = Order.getOrderAmount();
+    $scope.total_to_pay_in_puntos = Order.getOrderPuntosAmount();
     $scope.comingfrom = {type:'',text:''};
     $scope.reset_obj = {};
     delete  $scope.error_server;
@@ -800,13 +801,14 @@ angular.module('starter.controllers',[])
 
   })
 
-  .controller('OrderCtrl',function($scope,$rootScope,$ionicPopup,Order) {
+  .controller('OrderCtrl',function($scope,$state,$rootScope,$ionicPopup,Order,User) {
     var $app_scope =  Order.getMasterScope();
     $scope.shouldShowDelete = false;
     $scope.listCanSwipe = true;
     $scope.order_items = Order.getCurrentOrder();
     $scope.free_delivery = Order.is_free_delivery();
     $scope.total_order_amount = Order.getOrderAmount();
+    $scope.total_order_puntos = Order.getOrderPuntosAmount();
     $scope.is_go_checkout_ok = Order.is_min_amount_ok();
 
     $scope.$on('$ionicView.enter', function(e) {
@@ -817,6 +819,7 @@ angular.module('starter.controllers',[])
       var new_amount = Order.getOrderAmount();
       $scope.is_go_checkout_ok = Order.is_min_amount_ok();
       $scope.total_order_amount =  new_amount;
+      $scope.total_order_puntos = Order.getOrderPuntosAmount();
       $app_scope.total_order_amount =  new_amount;
     }
     $scope.add_quantity = function(p){
@@ -824,6 +827,7 @@ angular.module('starter.controllers',[])
       var new_amount = Order.getOrderAmount();
       $scope.is_go_checkout_ok = Order.is_min_amount_ok();
       $scope.total_order_amount =  new_amount;
+      $scope.total_order_puntos = Order.getOrderPuntosAmount();
       $app_scope.total_order_amount =  new_amount;
     }
     $scope.remove_product = function(index){
@@ -837,11 +841,45 @@ angular.module('starter.controllers',[])
 
       $app_scope.order_count =  new_count;
       $app_scope.total_order_amount =  new_amount;
+      $scope.total_order_puntos = Order.getOrderPuntosAmount();
     }
 
     $scope.$on('$ionicView.enter', function(e) {
         $app_scope.hide_footer = true;
     });
+    // check puntos
+    $scope.checkPuntosAlert = function() {
+
+      var user = User.getCurrentUser();
+      if(user!=undefined){
+        var puntos;
+        if(user.puntos==null){
+          puntos = 0;
+        }
+        else{
+          puntos = user.puntos;
+        }
+        if(!User.isPuntosUserEnough($scope.total_order_puntos)){
+          var html = '<div style="text-align: justify;margin: 5px;"><h3 style="text-align: center;">ALERTA</h3><p>Tu pedido requiere de <b>'+$scope.total_order_puntos+'</b> puntos. Tu dispones de <b>'+puntos+'</b> puntos.</p></div>';
+          var alertPuntosPopup = $ionicPopup.alert({
+            template: html,
+            okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
+          });
+        }
+        else{
+          $state.go('app.checkout');
+        }
+      }
+      else{ // not a user registred
+        var html = '<div style="text-align: justify;margin: 5px;"><h3 style="text-align: center;">ALERTA</h3><p style="text-align: justify;margin: 5px;">Tiene que autentificarte para poder canjear tus puntos</p></div>';
+        var alertPuntosPopup = $ionicPopup.alert({
+          template: html,
+          okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
+        });
+      }
+
+    }
+
   })
 .controller('PuntosCtrl', function($scope,$rootScope, $stateParams,Playlist,Order) {
   Array.prototype.chunk = function(chunkSize) {

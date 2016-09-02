@@ -130,6 +130,9 @@
           <div class="item" ng-repeat="order_item in order">
             {{order_item.q}} x {{order_item.p.nombre}}
           </div>
+          <div class="item" style="text-align: right" ng-if="total_to_pay_in_puntos>0">
+            Total Puntos Requeridos : <b>{{total_to_pay_in_puntos}}</b>
+          </div>
           <div class="item" style="text-align: right" ng-if="total_to_pay>0">
             Total A Pagar : <b>S/. {{total_to_pay}}</b>
           </div>

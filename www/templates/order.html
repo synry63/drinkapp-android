@@ -16,7 +16,7 @@
             <img style="max-height: 100px;top:0px" ng-src="{{item.p.img_u_r_l}}">
             <p class="order-item-quantity"><span class="quantity-text">Cantidad : </span><span class="quantity">{{item.q}}</span></p>
             <h2>{{item.p.nombre}}</h2>
-            <p ng-if="item.p.por_punto">{{item.p.precio_puntos}} puntos requeridos</p>
+            <p ng-if="item.p.por_punto">{{item.p.precio_puntos}} puntos</p>
             <p ng-if="!item.p.por_punto">S/. {{item.p.price}}</p>
             <p class="quantity-change">
               <span class="ion-arrow-swap"></span><span>slide cambiar cantidad.</span>
@@ -39,10 +39,11 @@
           <span ng-if="free_delivery==true">S/. 0.00</span>
         </p>
         <p>TOTAL A PAGAR : <span class="total">S/. {{total_order_amount}}</span></p>
+        <p>TOTAL PUNTOS REQUERIDOS : <span class="total">{{total_order_puntos}}</span></p>
       </div>
       <div class="item to-pay-bottom">
         <span>pedido mínimo 50 soles.</span>
-        <a ng-disabled="is_go_checkout_ok" href="#/app/checkout" class="button button-block button-assertive">
+        <a ng-disabled="is_go_checkout_ok" ng-click="checkPuntosAlert()" class="button button-block button-assertive">
           PAGAR
         </a>
       </div>

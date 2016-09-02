@@ -129,6 +129,15 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
 
         return trouve;
       },
+      isPuntosUserEnough:function(amountPuntos){
+        this.getCurrentUser();
+        if(cachedUser.puntos>=amountPuntos){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
       getCurrentUser:function(){
         if (typeof cachedUser === 'undefined'){
           cachedUser = window.localStorage['user'];
@@ -460,6 +469,19 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         return false;
 
       },
+      getOrderPuntosAmount:function(){
+        var amount = 0;
+        for (var i=0;i<order.pList.length;i++){
+          if(order.pList[i].p.por_punto){
+            var price_init = order.pList[i].p.precio_puntos;
+            var quantity = order.pList[i].q;
+            amount+= price_init*quantity;
+          }
+
+        }
+        return amount;
+
+      },
       getOrderAmount:function(){
         var amount = 0;
         for (var i=0;i<order.pList.length;i++){
@@ -494,7 +516,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         }
         $http({
           method: 'POST',
-          url: 'http://superapi.drinkapp.pe/drinkapp_src/addPedido_v6',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/addPedido_v7',
           data:data,
           withCredentials: false,
           headers: {

@@ -18,11 +18,16 @@
       <p>CARGANDO...</p>
       <ion-spinner class="spinner-assertive"></ion-spinner>
     </div>
-    <ion-list>
-        <a class="item item-avatar" bindonce  ng-repeat="playlist in playlists" bo-href="'#/app/playlists/'+playlist.id">
+    <ion-list bindonce ng-repeat="playlist in playlists" ng-switch on="playlist.key_index">
+        <a ng-switch-when="puntos" class="item item-avatar" bo-href="'#/app/playlists/puntos/'+playlist.id">
               <img bo-src="playlist.img_u_r_l">
               <i style="float: right" class="icon ion-chevron-right"></i>
               <h2 bo-bind="playlist.nombre"></h2>
+        </a>
+        <a ng-switch-default class="item item-avatar" bo-href="'#/app/playlists/'+playlist.id">
+          <img bo-src="playlist.img_u_r_l">
+          <i style="float: right" class="icon ion-chevron-right"></i>
+          <h2 bo-bind="playlist.nombre"></h2>
         </a>
     </ion-list>
   </ion-content>
