@@ -192,6 +192,32 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
 
         })
       },
+      setUserCupon:function (code,callback) {
+        var user_test = this.getCurrentUser();
+        var id_user;
+        if(user_test==undefined) id_user = 0;
+        else id_user = user_test.id;
+        $http({
+          method: 'POST',
+          url: 'http://superapi.drinkapp.pe/drinkapp_src/setCupon',
+          data:{'id':id_user,'code':code},
+          withCredentials: false,
+          headers: {
+            'Content-Type': 'application/json'
+
+          }
+
+        }).then(function(resp) {
+          // For JSON responses, resp.data contains the result
+          callback(resp.status,resp.data);
+
+        }, function(err) {
+          // err.status will contain the status code
+          callback(err.status,err.data.msg);
+          //$scope.error = err.data.msg;
+
+        })
+      },
       getUserPuntos:function(callback){
         $http({
           method: 'POST',
@@ -363,6 +389,9 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       clearOrder:function(){
         order.pList = [];
       },
+      initCupon:function (cupon) {
+        order.cupon = cupon;
+      },
       is_min_amount_ok:function(){
         return min_amount_ko;
       },
@@ -497,9 +526,14 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
         else{
           min_amount_ko = true;
         }
+        if(order.cupon!=undefined){
+          total = total*(100-order.cupon.percent)/100;
+        }
         if(total>0 && free_delivery==false){
           total+=3.50 // more delivery
         }
+
+
         return total.toFixed(2);
       },
       getCurrentOrder:function(){

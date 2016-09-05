@@ -196,6 +196,15 @@ span.previous-title{
   color: black;
   float: right;
 }
+.cupon .popup-body input{
+  border: 1px solid #e5e5e5;
+}
+.cupon .popup-head{
+  display: block;
+}
+.my-alert .popup-head{
+  display: block;
+}
 .popup-head{
   display: none;
 }
@@ -334,8 +343,14 @@ span.previous-title{
 .title{
   text-align: center;
  }
-#order-view .buttons button{
+/*#order-view .buttons button{
   color: red;
+}*/
+#order-view #delete-button{
+  color: red;
+}
+#order-view #cupon-button{
+  float: right;
 }
 #order-view .item-delete .button.icon{
   top:25%;

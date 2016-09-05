@@ -13,7 +13,7 @@ angular.module('starter.controllers',[])
 
       getFacebookProfileInfo(authResponse)
         .then(function(user) {
-          console.log(user);
+          //console.log(user);
           User.loginFacebook(user,function(resultCode,result){
             if(resultCode==200 || resultCode==201){
               delete $scope.error_server;
@@ -801,7 +801,7 @@ angular.module('starter.controllers',[])
 
   })
 
-  .controller('OrderCtrl',function($scope,$state,$rootScope,$ionicPopup,Order,User) {
+  .controller('OrderCtrl',function($scope,$state,$timeout,$rootScope,$ionicPopup,Order,User) {
     var $app_scope =  Order.getMasterScope();
     $scope.shouldShowDelete = false;
     $scope.listCanSwipe = true;
@@ -870,14 +870,75 @@ angular.module('starter.controllers',[])
           $state.go('app.checkout');
         }
       }
-      else{ // not a user registred
+      else if($scope.total_order_puntos>0){ // not a user registred
         var html = '<div style="text-align: justify;margin: 5px;"><h3 style="text-align: center;">ALERTA</h3><p style="text-align: justify;margin: 5px;">Tiene que autentificarte para poder canjear tus puntos</p></div>';
         var alertPuntosPopup = $ionicPopup.alert({
           template: html,
           okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
         });
       }
+      else{
+        $state.go('app.checkout');
+      }
 
+    }
+    //check cupon
+    $scope.cuponShow = function() {
+      $scope.cupon = {};
+      var cuponPopup = $ionicPopup.show({
+        template: '<input type="text" ng-model="cupon.code">',
+        title: 'Ingrese el codigo del Cupon',
+        cssClass:'cupon',
+        subTitle: 'Ejemplo : CAP001',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancelar' },
+          {
+            text: '<b>Agregar</b>',
+            type: 'button-assertive',
+            onTap: function(e) {
+              if (!$scope.cupon.code) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                  User.setUserCupon($scope.cupon.code,function(resultCode,r)
+                  {
+                    if(resultCode==400){
+                      var html = '<div style="text-align: justify;margin: 5px;">'+r+'</div>';
+
+                      $timeout(function(){
+                        $ionicPopup.alert({
+                          title: 'Alerta',
+                          cssClass: 'my-alert',
+                          template: html,
+                          okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
+                        });
+                      },350)
+                    }
+                    else{
+                      var html = '<div style="text-align: justify;margin: 5px;">'+r.descripcion+'</div>';
+                      $timeout(function(){
+                        $ionicPopup.alert({
+                          title: 'Alerta',
+                          cssClass: 'my-alert',
+                          template: html,
+                          okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
+                        });
+                      },350)
+                      Order.initCupon(r);
+                      var new_amount = Order.getOrderAmount();
+                      $scope.total_order_amount = new_amount;
+                      var $app_scope =  Order.getMasterScope();
+                      $app_scope.total_order_amount =  new_amount;
+                    }
+                  });
+                return $scope.cupon.code;
+
+              }
+            }
+          }
+        ]
+      });
     }
 
   })

@@ -6,9 +6,13 @@
     <h3 class="title">RESUMEN DE ORDEN</h3>
     <div ng-if="order_items.length>0">
       <div class="buttons">
-        <button class="button button-icon button-clear icon ion-trash-b"
+        <button id="delete-button" class="button button-icon button-clear icon ion-trash-b"
                 ng-click="showDelete = !showDelete; showReorder = false">
           Eliminar Producto
+        </button>
+        <button id="cupon-button" class="button button-icon button-clear button-energized"
+                ng-click="cuponShow()">
+          Agregar Cupon
         </button>
       </div>
       <ion-list show-delete="showDelete" can-swipe="listCanSwipe">
