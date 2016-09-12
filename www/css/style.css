@@ -196,6 +196,9 @@ span.previous-title{
   color: black;
   float: right;
 }
+.noti-popup .popup-head{
+  display: block;
+}
 .cupon .popup-body input{
   border: 1px solid #e5e5e5;
 }

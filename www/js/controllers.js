@@ -1,7 +1,28 @@
 angular.module('starter.controllers',[])
 
-.controller('AppCtrl', function($scope,$rootScope, $ionicModal,$location, $timeout,$http,$state,$ionicPopup,$q,Order,User) {
+.controller('AppCtrl', function($scope,$rootScope, $ionicModal,$location, $timeout,$http,$state,$ionicPopup,$q,$ionicPush,Order,User) {
 
+
+    $ionicPush.register().then(function(t) {
+      return $ionicPush.saveToken(t);
+    }).then(function(t) {
+      console.log('Token saved:', t.token);
+    });
+
+    $scope.$on('cloud:push:notification', function(event, data) {
+      var msg = data.message;
+      //alert(msg.title + ': ' + msg.text);
+
+      var alertPopup = $ionicPopup.alert({
+        title: msg.title,
+        template: msg.text,
+        cssClass: 'noti-popup', // String, The custom CSS class name
+        okType: 'button-assertive'// String (default: 'button-positive'). The type of the OK button.
+      });
+      alertPopup.then(function(res) {
+
+      });
+    });
 
     var fbLoginSuccess = function(response) {
       $rootScope.loading = true;

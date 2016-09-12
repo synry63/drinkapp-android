@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngMessages'])
+angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngMessages','ionic.cloud'])
 
 
 
@@ -571,7 +571,26 @@ angular.module('starter', ['ionic', 'starter.controllers','pasvaz.bindonce','ngM
       }
     }
   })
-  .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider,$httpProvider) {
+  .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider,$httpProvider,$ionicCloudProvider) {
+
+    $ionicCloudProvider.init({
+      "core": {
+        "app_id": "171ec886"
+      },
+      "push": {
+        "sender_id": "253353072562",
+        "pluginConfig": {
+          "ios": {
+            "badge": true,
+            "sound": true
+          },
+          "android": {
+            "iconColor": "#343434"
+          }
+        }
+      }
+    });
+
     $httpProvider.defaults.useXDomain = true;
     $ionicConfigProvider.backButton.previousTitleText(false).text('');
     $ionicConfigProvider.views.transition('platform');
